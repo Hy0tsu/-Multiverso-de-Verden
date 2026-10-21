@@ -37,7 +37,6 @@ if "planets" not in st.session_state:
 # --- PAINEL LATERAL: CONTROLES & GESTÃO DE ARQUIVOS ---
 st.sidebar.header("💾 Salvar & Compartilhar Cosmologia")
 
-# 1. EXPORTAR / DOWNLOAD JSON
 export_data = {
     "lambda_val": float(st.session_state.lambda_val),
     "dimensions": st.session_state.dimensions,
@@ -53,7 +52,6 @@ st.sidebar.download_button(
     help="Baixa a configuração completa de planos e dimensões para guardar ou compartilhar com outros."
 )
 
-# 2. IMPORTAR / UPLOAD JSON
 uploaded_file = st.sidebar.file_uploader(
     "📂 Carregar Cosmologia (JSON):", 
     type=["json"],
@@ -103,7 +101,6 @@ if st.sidebar.button("🗑️ Remover Dimensões Selecionadas"):
 
 # --- CÁLCULOS MATEMÁTICOS ---
 def tribonacci_coords(n):
-    """Gera a geometria helicoidal tridimensional baseada na Constante Alpha de Tribonacci."""
     theta = (n - 1) * (2 * np.pi / ALPHA)
     r_spatial = np.power(ALPHA, (n - 1) / 3.0)
     x = r_spatial * np.cos(theta)
@@ -141,7 +138,6 @@ def calculate_r_and_psi(planet, extra_dims, lambda_val):
     psi = r / (r + lambda_val)
     return r, psi, x, y, z
 
-# Atualizar dados dos planos
 planet_data = []
 for p in st.session_state.planets:
     r, psi, x, y, z = calculate_r_and_psi(p, st.session_state.dimensions, st.session_state.lambda_val)
@@ -225,7 +221,17 @@ with tab1:
 
     st.markdown("---")
     st.subheader("📋 Gerenciamento de Planos de Existência")
-    
+
+    # --- AVISO CONDICIONAL DE PLANOS DE EXEMPLO ---
+    default_names = {
+        "Origem (Singularidade)", "Plano Infernal", "Plano Umbral", 
+        "Plano Astral", "Plano Material", "Plano Etéreo"
+    }
+    current_names = {p["Nome"] for p in st.session_state.planets}
+
+    if current_names == default_names:
+        st.info("💡 **Nota para o Mestre:** Os planos listados abaixo são apenas **exemplos padrão** ilustrativos para teste. Assim que você editar, excluir ou adicionar novos planos, este aviso sumirá automaticamente!")
+
     col_add, col_edit, col_del = st.columns(3)
     
     # ➕ ADICIONAR PLANO
