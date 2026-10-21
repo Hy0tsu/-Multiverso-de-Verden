@@ -230,7 +230,7 @@ with tab1:
     current_names = {p["Nome"] for p in st.session_state.planets}
 
     if current_names == default_names:
-        st.info("💡 **Nota para o Mestre:** Os planos listados abaixo são apenas **exemplos padrão** ilustrativos para teste. Assim que você editar, excluir ou adicionar novos planos, este aviso sumirá automaticamente!")
+        st.info("💡 **Dica do Mestre:** Os planos listados abaixo são apenas **exemplos** ilustrativos para teste, e não representam planos reais de Verden. Assim que você editar, excluir ou adicionar novos planos, este aviso sumirá automaticamente!")
 
     col_add, col_edit, col_del = st.columns(3)
     
